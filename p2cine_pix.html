@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P2CINE - PIX</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+  background:#0b0b0f; color:#fff; font-family:Arial,Helvetica,sans-serif;
+}
+.card{
+  width:min(430px,92%); background:#15151b; border:1px solid #2b2b35;
+  border-radius:20px; padding:28px; box-shadow:0 15px 45px rgba(0,0,0,.45);
+}
+h1{text-align:center;margin:0 0 6px;font-size:30px}
+.subtitle{text-align:center;color:#aaa;margin-bottom:25px}
+label{display:block;margin:0 0 8px;color:#ddd;font-weight:bold}
+input{
+  width:100%; padding:15px; border-radius:10px; border:1px solid #383844;
+  background:#0e0e13;color:#fff;font-size:18px;outline:none;
+}
+input:focus{border-color:#777}
+.buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:15px 0}
+.buttons button{min-height:72px}
+.buttons span{font-size:13px;font-weight:normal}
+.buttons button.selected{outline:2px solid #fff;background:#444451}
+button{
+  border:0;border-radius:10px;padding:13px;font-size:16px;font-weight:bold;cursor:pointer;
+  background:#2a2a34;color:#fff;
+}
+button:hover{filter:brightness(1.15)}
+.primary{width:100%;background:#fff;color:#111;margin-top:5px}
+.result{display:none;text-align:center;margin-top:25px}
+#qrcode{background:#fff;padding:14px;border-radius:12px;width:max-content;margin:0 auto 18px}
+.value{font-size:25px;font-weight:bold;margin:10px 0}
+.status{color:#9f9fa9;font-size:14px;line-height:1.5}
+.highlight{color:#fff;font-weight:bold;font-size:16px;margin:8px 0 4px}
+.copy{
+  width:100%;background:#33333f;margin-top:14px;
+}
+.download{width:100%;margin-top:8px}
+.error{color:#ff7272;margin-top:12px;text-align:center;display:none}
+.small{font-size:12px;color:#777;text-align:center;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>COMPRAR CRÉDITOS</h1>
+  <div class="subtitle">Pagamento via PIX</div>
+
+  <div class="buttons">
+    <button onclick="selecionarFaixa('baixo')">P2CINE<br><span>ATÉ R$ 149,00</span></button>
+    <button onclick="selecionarFaixa('alto')">P2CINE<br><span>R$ 150,00 OU MAIS</span></button>
+    <button onclick="selecionarFaixa('gf')">GF (CLYCK)<br><span>QUALQUER VALOR</span></button>
+    <button onclick="selecionarFaixa('pulse')">PULSE<br><span>QUALQUER VALOR</span></button>
+    <button onclick="selecionarFaixa('imperial')">IMPERIAL<br><span>QUALQUER VALOR</span></button>
+    <button onclick="selecionarFaixa('outros')">OUTROS SERVIDORES<br><span>QUALQUER VALOR</span></button>
+  </div>
+
+  <button class="primary" onclick="gerarPix()">GERAR QR CODE PIX</button>
+  <div class="error" id="erro"></div>
+
+  <div class="result" id="resultado">
+    <div id="qrcode"></div>
+    
+    <div class="status highlight">Informe o valor diretamente no aplicativo do seu banco.</div>
+    <button class="copy" onclick="copiarPix()">COPIAR PIX COPIA E COLA</button>
+    <button class="download" onclick="baixarQr()">BAIXAR QR CODE</button>
+  </div>
+
+  <div class="small">O valor será informado pelo cliente diretamente no aplicativo do banco.</div>
+</div>
+
+<script>
+const PIX_CONFIGS = [
+  {
+    max: 149.00,
+    key: "bbed7982-d54d-4e10-8e92-80533aa1e879",
+    name: "LARISSA MENDES APOLINARIO"
+  },
+  {
+    min: 150.00,
+    key: "94af25d0-715b-4878-b895-0b8d7c679d37",
+    name: "MAYCON WESLEY NUNES DE LIMA"
+  }
+];
+const MERCHANT_CITY = "BELEM";
+
+let faixaSelecionada = null;
+
+function selecionarFaixa(faixa){
+  faixaSelecionada = faixa;
+  document.querySelectorAll(".buttons button").forEach(btn => btn.classList.remove("selected"));
+  const botoes = document.querySelectorAll(".buttons button");
+  const mapa = {baixo:0, alto:1, gf:2, pulse:3, imperial:4, outros:5};
+  if (botoes[mapa[faixa]]) botoes[mapa[faixa]].classList.add("selected");
+}
+
+function tlv(id, value){
+  return id + String(value.length).padStart(2,"0") + value;
+}
+
+function crc16(payload){
+  let crc = 0xFFFF;
+  for(let i=0;i<payload.length;i++){
+    crc ^= payload.charCodeAt(i) << 8;
+    for(let j=0;j<8;j++){
+      crc = (crc & 0x8000) ? ((crc << 1) ^ 0x1021) & 0xFFFF : (crc << 1) & 0xFFFF;
+    }
+  }
+  return crc.toString(16).toUpperCase().padStart(4,"0");
+}
+
+function criarPix(valor, config){
+  const merchantAccount =
+    tlv("00","br.gov.bcb.pix") +
+    tlv("01",config.key);
+
+  let payload =
+    tlv("00","01") +
+    tlv("26",merchantAccount) +
+    tlv("52","0000") +
+    tlv("53","986") +
+    tlv("54",valor.toFixed(2)) +
+    tlv("58","BR") +
+    tlv("59",config.name.substring(0,25)) +
+    tlv("60",MERCHANT_CITY.substring(0,15)) +
+    tlv("62",tlv("05","P2CINE")) +
+    "6304";
+
+  return payload + crc16(payload);
+}
+
+function parseValor(){
+  return null;
+}
+
+function gerarPix(){
+  const erro = document.getElementById("erro");
+  const resultado = document.getElementById("resultado");
+  erro.style.display="none";
+
+  if(!faixaSelecionada){
+    erro.textContent="Selecione uma das quatro opções P2CINE.";
+    erro.style.display="block";
+    resultado.style.display="none";
+    return;
+  }
+
+  const config = (faixaSelecionada === "alto")
+    ? PIX_CONFIGS[1]
+    : PIX_CONFIGS[0];
+
+  // QR Code sem valor: o cliente informa o valor no aplicativo do banco.
+  const pix = criarPixSemValor(config);
+  const box = document.getElementById("qrcode");
+  box.innerHTML="";
+  new QRCode(box,{
+    text:pix,
+    width:230,
+    height:230,
+    correctLevel:QRCode.CorrectLevel.M
+  });
+
+  document.querySelector(".status").textContent =
+    "Informe o valor diretamente no aplicativo do seu banco.";
+
+  window.pixAtual = pix;
+  resultado.style.display="block";
+}
+
+function criarPixSemValor(config){
+  const merchantAccount =
+    tlv("00","br.gov.bcb.pix") +
+    tlv("01",config.key);
+
+  let payload =
+    tlv("00","01") +
+    tlv("26",merchantAccount) +
+    tlv("52","0000") +
+    tlv("53","986") +
+    tlv("58","BR") +
+    tlv("59",config.name.substring(0,25)) +
+    tlv("60",MERCHANT_CITY.substring(0,15)) +
+    tlv("62",tlv("05","P2CINE")) +
+    "6304";
+
+  return payload + crc16(payload);
+}
+
+async function copiarPix(){
+  if(!window.pixAtual) return;
+  try{
+    await navigator.clipboard.writeText(window.pixAtual);
+    alert("PIX Copia e Cola copiado!");
+  }catch(e){
+    prompt("Copie o PIX Copia e Cola:", window.pixAtual);
+  }
+}
+
+function baixarQr(){
+  const canvas = document.querySelector("#qrcode canvas");
+  const img = document.querySelector("#qrcode img");
+  const link = document.createElement("a");
+  link.download = "p2cine-pix.png";
+  link.href = canvas ? canvas.toDataURL("image/png") : img.src;
+  link.click();
+}
+</script>
+</body>
+</html>
