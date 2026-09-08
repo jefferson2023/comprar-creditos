@@ -42,6 +42,7 @@ button:hover{filter:brightness(1.15)}
   width:100%;background:#33333f;margin-top:14px;
 }
 .download{width:100%;margin-top:8px}
+.whatsapp{width:100%;margin-top:8px;background:#25D366;color:#fff}
 .error{color:#ff7272;margin-top:12px;text-align:center;display:none}
 .small{font-size:12px;color:#777;text-align:center;margin-top:20px}
 </style>
@@ -69,6 +70,7 @@ button:hover{filter:brightness(1.15)}
     <div class="status highlight">Informe o valor diretamente no aplicativo do seu banco.</div>
     <button class="copy" onclick="copiarPix()">COPIAR PIX COPIA E COLA</button>
     <button class="download" onclick="baixarQr()">BAIXAR QR CODE</button>
+    <button class="whatsapp" onclick="enviarComprovante()">ENVIAR COMPROVANTE PELO ZAP</button>
   </div>
 
   <div class="small">O valor será informado pelo cliente diretamente no aplicativo do banco.</div>
@@ -199,6 +201,12 @@ async function copiarPix(){
   }catch(e){
     prompt("Copie o PIX Copia e Cola:", window.pixAtual);
   }
+}
+
+function enviarComprovante(){
+  const mensagem = "Olá! Acabei de realizar o pagamento e estou enviando o comprovante.";
+  const url = "https://wa.me/5591991970340?text=" + encodeURIComponent(mensagem);
+  window.open(url, "_blank");
 }
 
 function baixarQr(){
