@@ -13,7 +13,7 @@ body{
 }
 .card{
   width:min(430px,92%); background:#15151b; border:1px solid #2b2b35;
-  border-radius:20px; padding:28px; box-shadow:0 15px 45px rgba(0,0,0,.45);
+  border-radius:18px; padding:22px; box-shadow:0 15px 45px rgba(0,0,0,.45);
 }
 h1{text-align:center;margin:0 0 6px;font-size:30px}
 .subtitle{text-align:center;color:#aaa;margin-bottom:25px}
@@ -34,7 +34,8 @@ button{
 button:hover{filter:brightness(1.15)}
 .primary{width:100%;background:#fff;color:#111;margin-top:5px}
 .result{display:none;text-align:center;margin-top:25px}
-#qrcode{background:#fff;padding:14px;border-radius:12px;width:max-content;margin:0 auto 18px}
+#qrcode{background:#fff;padding:8px;border-radius:10px;width:max-content;margin:0 auto 12px}
+#qrcode img,#qrcode canvas{width:190px!important;height:190px!important}
 .value{font-size:25px;font-weight:bold;margin:10px 0}
 .status{color:#9f9fa9;font-size:14px;line-height:1.5}
 .highlight{color:#fff;font-weight:bold;font-size:16px;margin:8px 0 4px}
@@ -42,9 +43,23 @@ button:hover{filter:brightness(1.15)}
   width:100%;background:#33333f;margin-top:14px;
 }
 .download{width:100%;margin-top:8px}
-.whatsapp{width:100%;margin-top:8px;background:#25D366;color:#fff}
+.whatsapp{width:100%;margin-top:7px;background:#25D366;color:#fff;padding:11px;font-size:14px}
 .error{color:#ff7272;margin-top:12px;text-align:center;display:none}
 .small{font-size:12px;color:#777;text-align:center;margin-top:20px}
+@media (max-width:480px){
+  body{padding:10px}
+  .card{width:100%;padding:16px;border-radius:15px}
+  h1{font-size:24px}
+  .subtitle{margin-bottom:16px}
+  .buttons{gap:7px;margin:10px 0}
+  .buttons button{min-height:58px;padding:9px 6px;font-size:14px}
+  .buttons span{font-size:11px}
+  .primary{padding:11px;font-size:14px}
+  #qrcode{padding:6px;margin-bottom:10px}
+  #qrcode img,#qrcode canvas{width:170px!important;height:170px!important}
+  .highlight{font-size:14px}
+  .small{font-size:10px;margin-top:12px}
+}
 </style>
 </head>
 <body>
@@ -69,7 +84,6 @@ button:hover{filter:brightness(1.15)}
     
     <div class="status highlight">Informe o valor diretamente no aplicativo do seu banco.</div>
     <button class="copy" onclick="copiarPix()">COPIAR PIX COPIA E COLA</button>
-    <button class="download" onclick="baixarQr()">BAIXAR QR CODE</button>
     <button class="whatsapp" onclick="enviarComprovante()">ENVIAR COMPROVANTE PELO ZAP</button>
   </div>
 
@@ -209,14 +223,6 @@ function enviarComprovante(){
   window.open(url, "_blank");
 }
 
-function baixarQr(){
-  const canvas = document.querySelector("#qrcode canvas");
-  const img = document.querySelector("#qrcode img");
-  const link = document.createElement("a");
-  link.download = "p2cine-pix.png";
-  link.href = canvas ? canvas.toDataURL("image/png") : img.src;
-  link.click();
-}
 </script>
 </body>
 </html>
