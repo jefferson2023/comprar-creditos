@@ -8,9 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -19,12 +17,7 @@ body{
   align-items:center;
   justify-content:center;
   padding:14px;
-  background:linear-gradient(
-    135deg,
-    #16002f 0%,
-    #3b0b75 42%,
-    #062b82 100%
-  );
+  background:linear-gradient(135deg,#16002f 0%,#3b0b75 42%,#062b82 100%);
   color:#fff;
   font-family:Arial,Helvetica,sans-serif;
 }
@@ -93,7 +86,25 @@ button:hover{
   width:100%;
   background:#fff;
   color:#111;
-  margin-top:4px;
+  margin-top:10px;
+}
+
+/* AVISO EM DESTAQUE */
+.proof-highlight{
+  margin-top:14px;
+  padding:14px 10px;
+  border-radius:12px;
+  background:rgba(255,255,255,.12);
+  border:2px solid #fff;
+  color:#fff;
+  font-size:18px;
+  font-weight:900;
+  text-align:center;
+  letter-spacing:.3px;
+  text-shadow:0 1px 3px rgba(0,0,0,.8);
+  box-shadow:
+    0 0 12px rgba(255,255,255,.18),
+    inset 0 0 12px rgba(255,255,255,.06);
 }
 
 .result{
@@ -122,24 +133,6 @@ button:hover{
   font-weight:bold;
   font-size:14px;
   margin:7px 0 3px;
-}
-
-/* DESTAQUE DO COMPROVANTE */
-.proof-highlight{
-  margin-top:14px;
-  padding:13px 10px;
-  border-radius:12px;
-  background:rgba(255,255,255,.12);
-  border:2px solid #fff;
-  color:#fff;
-  font-size:18px;
-  font-weight:900;
-  text-align:center;
-  letter-spacing:.3px;
-  text-shadow:0 1px 3px rgba(0,0,0,.8);
-  box-shadow:
-    0 0 12px rgba(255,255,255,.18),
-    inset 0 0 12px rgba(255,255,255,.06);
 }
 
 .copy{
@@ -207,6 +200,12 @@ button:hover{
     font-size:11px;
   }
 
+  .proof-highlight{
+    font-size:17px;
+    padding:12px 8px;
+    margin-top:12px;
+  }
+
   .primary{
     padding:11px;
     font-size:14px;
@@ -231,14 +230,7 @@ button:hover{
     font-size:13px;
   }
 
-  .proof-highlight{
-    font-size:17px;
-    padding:12px 8px;
-    margin-top:12px;
-  }
-
-  .copy,
-  .whatsapp{
+  .copy,.whatsapp{
     padding:10px;
     font-size:13px;
   }
@@ -295,6 +287,11 @@ button:hover{
 
   </div>
 
+  <!-- AVISO ANTES DO BOTÃO PIX -->
+  <div class="proof-highlight">
+    ENVIE O COMPROVANTE VIA ZAP
+  </div>
+
   <button class="primary" onclick="gerarPix()">
     GERAR QR CODE PIX
   </button>
@@ -313,11 +310,6 @@ button:hover{
       COPIAR PIX COPIA E COLA
     </button>
 
-    <!-- AVISO BEM DESTACADO -->
-    <div class="proof-highlight">
-      ENVIE O COMPROVANTE VIA ZAP
-    </div>
-
     <button class="whatsapp" onclick="enviarComprovante()">
       ENVIAR COMPROVANTE PELO ZAP
     </button>
@@ -333,32 +325,26 @@ button:hover{
 <script>
 
 const PIX_CONFIGS = [
-
   {
     max:149.00,
     key:"bbed7982-d54d-4e10-8e92-80533aa1e879",
     name:"LARISSA MENDES APOLINARIO"
   },
-
   {
     min:150.00,
     key:"94af25d0-715b-4878-b895-0b8d7c679d37",
     name:"MAYCON WESLEY NUNES DE LIMA"
   }
-
 ];
 
 const MERCHANT_CITY = "BELEM";
-
 let faixaSelecionada = null;
-
 
 function selecionarFaixa(faixa){
 
   faixaSelecionada = faixa;
 
-  document
-    .querySelectorAll(".buttons button")
+  document.querySelectorAll(".buttons button")
     .forEach(btn => btn.classList.remove("selected"));
 
   const botoes = document.querySelectorAll(".buttons button");
@@ -373,23 +359,13 @@ function selecionarFaixa(faixa){
   };
 
   if(botoes[mapa[faixa]]){
-
-    botoes[mapa[faixa]]
-      .classList.add("selected");
-
+    botoes[mapa[faixa]].classList.add("selected");
   }
-
 }
-
 
 function tlv(id,value){
-
-  return id +
-    String(value.length).padStart(2,"0") +
-    value;
-
+  return id + String(value.length).padStart(2,"0") + value;
 }
-
 
 function crc16(payload){
 
@@ -407,182 +383,86 @@ function crc16(payload){
         : (crc << 1) & 0xFFFF;
 
     }
-
   }
 
-  return crc
-    .toString(16)
+  return crc.toString(16)
     .toUpperCase()
     .padStart(4,"0");
-
 }
-
 
 function gerarPix(){
 
-  const erro =
-    document.getElementById("erro");
-
-  const resultado =
-    document.getElementById("resultado");
+  const erro = document.getElementById("erro");
+  const resultado = document.getElementById("resultado");
 
   erro.style.display="none";
 
-
   if(!faixaSelecionada){
 
-    erro.textContent =
-      "Selecione uma opção acima.";
-
+    erro.textContent="Selecione uma opção acima.";
     erro.style.display="block";
-
     resultado.style.display="none";
 
     return;
-
   }
-
 
   const config =
     faixaSelecionada === "alto"
       ? PIX_CONFIGS[1]
       : PIX_CONFIGS[0];
 
+  const pix = criarPixSemValor(config);
 
-  const pix =
-    criarPixSemValor(config);
-
-
-  const box =
-    document.getElementById("qrcode");
+  const box = document.getElementById("qrcode");
 
   box.innerHTML="";
 
-
   new QRCode(box,{
-
     text:pix,
-
     width:230,
-
     height:230,
-
-    correctLevel:
-      QRCode.CorrectLevel.M
-
+    correctLevel:QRCode.CorrectLevel.M
   });
 
-
-  document
-    .querySelector(".status")
-    .textContent =
-      "Informe o valor diretamente no aplicativo do seu banco.";
-
+  document.querySelector(".status").textContent =
+    "Informe o valor diretamente no aplicativo do seu banco.";
 
   window.pixAtual = pix;
 
   resultado.style.display="block";
-
 }
-
 
 function criarPixSemValor(config){
 
   const merchantAccount =
-
-    tlv(
-      "00",
-      "br.gov.bcb.pix"
-    )
-
-    +
-
-    tlv(
-      "01",
-      config.key
-    );
-
+    tlv("00","br.gov.bcb.pix") +
+    tlv("01",config.key);
 
   let payload =
-
-    tlv("00","01")
-
-    +
-
-    tlv(
-      "26",
-      merchantAccount
-    )
-
-    +
-
-    tlv(
-      "52",
-      "0000"
-    )
-
-    +
-
-    tlv(
-      "53",
-      "986"
-    )
-
-    +
-
-    tlv(
-      "58",
-      "BR"
-    )
-
-    +
-
-    tlv(
-      "59",
-      config.name.substring(0,25)
-    )
-
-    +
-
-    tlv(
-      "60",
-      MERCHANT_CITY.substring(0,15)
-    )
-
-    +
-
-    tlv(
-      "62",
-      tlv("05","P2CINE")
-    )
-
-    +
-
+    tlv("00","01") +
+    tlv("26",merchantAccount) +
+    tlv("52","0000") +
+    tlv("53","986") +
+    tlv("58","BR") +
+    tlv("59",config.name.substring(0,25)) +
+    tlv("60",MERCHANT_CITY.substring(0,15)) +
+    tlv("62",tlv("05","P2CINE")) +
     "6304";
 
-
   return payload + crc16(payload);
-
 }
-
 
 async function copiarPix(){
 
   if(!window.pixAtual){
-
     return;
-
   }
-
 
   try{
 
-    await navigator.clipboard
-      .writeText(window.pixAtual);
+    await navigator.clipboard.writeText(window.pixAtual);
 
-    alert(
-      "PIX Copia e Cola copiado!"
-    );
+    alert("PIX Copia e Cola copiado!");
 
   }catch(e){
 
@@ -592,30 +472,18 @@ async function copiarPix(){
     );
 
   }
-
 }
-
 
 function enviarComprovante(){
 
   const mensagem =
     "Olá! Acabei de realizar o pagamento e estou enviando o comprovante.";
 
-
   const url =
-
-    "https://wa.me/5591991970340?text="
-
-    +
-
+    "https://wa.me/5591991970340?text=" +
     encodeURIComponent(mensagem);
 
-
-  window.open(
-    url,
-    "_blank"
-  );
-
+  window.open(url,"_blank");
 }
 
 </script>
