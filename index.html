@@ -1,212 +1,626 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>COMPRAR CRÉDITOS - PIX</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
-  padding:14px;
-  background:linear-gradient(135deg,#16002f 0%,#3b0b75 42%,#062b82 100%);
-  color:#fff; font-family:Arial,Helvetica,sans-serif;
+*{
+  box-sizing:border-box;
 }
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+  background:linear-gradient(
+    135deg,
+    #16002f 0%,
+    #3b0b75 42%,
+    #062b82 100%
+  );
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
 .card{
   width:min(430px,100%);
   background:rgba(10,8,35,.82);
   border:1px solid rgba(115,90,255,.65);
-  border-radius:20px; padding:20px;
+  border-radius:20px;
+  padding:20px;
   box-shadow:0 15px 45px rgba(0,0,0,.45);
   backdrop-filter:blur(8px);
 }
-h1{text-align:center;margin:0 0 4px;font-size:27px}
-.subtitle{text-align:center;color:#d0c8e8;margin-bottom:17px;font-size:14px}
-label{display:block;margin:0 0 8px;color:#ddd;font-weight:bold}
-input{
-  width:100%; padding:15px; border-radius:10px; border:1px solid #383844;
-  background:#0e0e13;color:#fff;font-size:18px;outline:none;
+
+h1{
+  text-align:center;
+  margin:0 0 4px;
+  font-size:27px;
 }
-input:focus{border-color:#777}
-.buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}
-.buttons button{min-height:62px}
-.buttons span{font-size:13px;font-weight:normal}
-.buttons button.selected{outline:2px solid #fff;background:#444451}
+
+.subtitle{
+  text-align:center;
+  color:#d0c8e8;
+  margin-bottom:17px;
+  font-size:14px;
+}
+
+.buttons{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin:12px 0;
+}
+
+.buttons button{
+  min-height:62px;
+}
+
+.buttons span{
+  font-size:13px;
+  font-weight:normal;
+}
+
+.buttons button.selected{
+  outline:2px solid #fff;
+  background:#444451;
+}
+
 button{
-  border:0;border-radius:10px;padding:11px 8px;font-size:15px;font-weight:bold;cursor:pointer;
-  background:rgba(35,30,75,.9);color:#fff;
+  border:0;
+  border-radius:10px;
+  padding:11px 8px;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+  background:rgba(35,30,75,.9);
+  color:#fff;
   border:1px solid rgba(105,85,255,.55);
 }
-button:hover{filter:brightness(1.15)}
-.primary{width:100%;background:#fff;color:#111;margin-top:4px}
-.result{display:none;text-align:center;margin-top:17px}
-#qrcode{background:#fff;padding:8px;border-radius:10px;width:max-content;max-width:100%;margin:0 auto 12px}
-.value{font-size:25px;font-weight:bold;margin:10px 0}
-.status{color:#d7d3e6;font-size:13px;line-height:1.4}
-.highlight{color:#fff;font-weight:bold;font-size:14px;margin:7px 0 3px}
-.copy{
-  width:100%;background:#29205d;margin-top:10px;
+
+button:hover{
+  filter:brightness(1.15);
 }
-.whatsapp{width:100%;margin-top:8px;background:#25D366;color:#fff;border-color:#25D366}
-.error{color:#ff7272;margin-top:12px;text-align:center;display:none}
-.small{font-size:11px;color:#aaa6bd;text-align:center;margin-top:12px}
+
+.primary{
+  width:100%;
+  background:#fff;
+  color:#111;
+  margin-top:4px;
+}
+
+.result{
+  display:none;
+  text-align:center;
+  margin-top:17px;
+}
+
+#qrcode{
+  background:#fff;
+  padding:8px;
+  border-radius:10px;
+  width:max-content;
+  max-width:100%;
+  margin:0 auto 12px;
+}
+
+.status{
+  color:#d7d3e6;
+  font-size:13px;
+  line-height:1.4;
+}
+
+.highlight{
+  color:#fff;
+  font-weight:bold;
+  font-size:14px;
+  margin:7px 0 3px;
+}
+
+/* DESTAQUE DO COMPROVANTE */
+.proof-highlight{
+  margin-top:14px;
+  padding:13px 10px;
+  border-radius:12px;
+  background:rgba(255,255,255,.12);
+  border:2px solid #fff;
+  color:#fff;
+  font-size:18px;
+  font-weight:900;
+  text-align:center;
+  letter-spacing:.3px;
+  text-shadow:0 1px 3px rgba(0,0,0,.8);
+  box-shadow:
+    0 0 12px rgba(255,255,255,.18),
+    inset 0 0 12px rgba(255,255,255,.06);
+}
+
+.copy{
+  width:100%;
+  background:#29205d;
+  margin-top:10px;
+}
+
+.whatsapp{
+  width:100%;
+  margin-top:8px;
+  background:#25D366;
+  color:#fff;
+  border-color:#25D366;
+}
+
+.error{
+  color:#ff7272;
+  margin-top:12px;
+  text-align:center;
+  display:none;
+}
+
+.small{
+  font-size:11px;
+  color:#aaa6bd;
+  text-align:center;
+  margin-top:12px;
+}
 
 @media (max-width:480px){
-  body{padding:8px;align-items:flex-start;}
-  .card{padding:16px;border-radius:17px;margin:4px 0;}
-  h1{font-size:24px;}
-  .subtitle{margin-bottom:13px;font-size:13px;}
-  .buttons{gap:7px;margin:10px 0;}
-  .buttons button{min-height:57px;padding:9px 6px;font-size:13px;}
-  .buttons span{font-size:11px;}
-  .primary{padding:11px;font-size:14px;}
-  .result{margin-top:14px;}
-  #qrcode{padding:6px;margin-bottom:10px;}
-  #qrcode canvas,#qrcode img{width:170px !important;height:170px !important;}
-  .highlight{font-size:13px;}
-  .copy,.whatsapp{padding:10px;font-size:13px;}
-  .small{margin-top:9px;font-size:10px;}
+
+  body{
+    padding:8px;
+    align-items:flex-start;
+  }
+
+  .card{
+    padding:16px;
+    border-radius:17px;
+    margin:4px 0;
+  }
+
+  h1{
+    font-size:24px;
+  }
+
+  .subtitle{
+    margin-bottom:13px;
+    font-size:13px;
+  }
+
+  .buttons{
+    gap:7px;
+    margin:10px 0;
+  }
+
+  .buttons button{
+    min-height:57px;
+    padding:9px 6px;
+    font-size:13px;
+  }
+
+  .buttons span{
+    font-size:11px;
+  }
+
+  .primary{
+    padding:11px;
+    font-size:14px;
+  }
+
+  .result{
+    margin-top:14px;
+  }
+
+  #qrcode{
+    padding:6px;
+    margin-bottom:10px;
+  }
+
+  #qrcode canvas,
+  #qrcode img{
+    width:170px !important;
+    height:170px !important;
+  }
+
+  .highlight{
+    font-size:13px;
+  }
+
+  .proof-highlight{
+    font-size:17px;
+    padding:12px 8px;
+    margin-top:12px;
+  }
+
+  .copy,
+  .whatsapp{
+    padding:10px;
+    font-size:13px;
+  }
+
+  .small{
+    margin-top:9px;
+    font-size:10px;
+  }
 }
 </style>
 </head>
-<body>
-<div class="card">
-  <h1>COMPRAR CRÉDITOS</h1>
-  <div class="subtitle">Pagamento via PIX</div>
 
-  <div class="buttons">
-    <button onclick="selecionarFaixa('baixo')">P2CINE<br><span>ATÉ R$ 149,00</span></button>
-    <button onclick="selecionarFaixa('alto')">P2CINE<br><span>R$ 150,00 OU MAIS</span></button>
-    <button onclick="selecionarFaixa('gf')">GF (CLYCK)<br><span>QUALQUER VALOR</span></button>
-    <button onclick="selecionarFaixa('pulse')">PULSE<br><span>QUALQUER VALOR</span></button>
-    <button onclick="selecionarFaixa('imperial')">IMPERIAL<br><span>QUALQUER VALOR</span></button>
-    <button onclick="selecionarFaixa('outros')">OUTROS SERVIDORES<br><span>QUALQUER VALOR</span></button>
+<body>
+
+<div class="card">
+
+  <h1>COMPRAR CRÉDITOS</h1>
+
+  <div class="subtitle">
+    Pagamento via PIX
   </div>
 
-  <button class="primary" onclick="gerarPix()">GERAR QR CODE PIX</button>
+  <div class="buttons">
+
+    <button onclick="selecionarFaixa('baixo')">
+      P2CINE<br>
+      <span>ATÉ R$ 149,00</span>
+    </button>
+
+    <button onclick="selecionarFaixa('alto')">
+      P2CINE<br>
+      <span>R$ 150,00 OU MAIS</span>
+    </button>
+
+    <button onclick="selecionarFaixa('gf')">
+      GF (CLYCK)<br>
+      <span>QUALQUER VALOR</span>
+    </button>
+
+    <button onclick="selecionarFaixa('pulse')">
+      PULSE<br>
+      <span>QUALQUER VALOR</span>
+    </button>
+
+    <button onclick="selecionarFaixa('imperial')">
+      IMPERIAL<br>
+      <span>QUALQUER VALOR</span>
+    </button>
+
+    <button onclick="selecionarFaixa('outros')">
+      OUTROS SERVIDORES<br>
+      <span>QUALQUER VALOR</span>
+    </button>
+
+  </div>
+
+  <button class="primary" onclick="gerarPix()">
+    GERAR QR CODE PIX
+  </button>
+
   <div class="error" id="erro"></div>
 
   <div class="result" id="resultado">
+
     <div id="qrcode"></div>
-    
-    <div class="status highlight">Informe o valor diretamente no aplicativo do seu banco.</div>
-    <button class="copy" onclick="copiarPix()">COPIAR PIX COPIA E COLA</button>
-    <button class="whatsapp" onclick="enviarComprovante()">ENVIAR COMPROVANTE PELO ZAP</button>
+
+    <div class="status highlight">
+      Informe o valor diretamente no aplicativo do seu banco.
+    </div>
+
+    <button class="copy" onclick="copiarPix()">
+      COPIAR PIX COPIA E COLA
+    </button>
+
+    <!-- AVISO BEM DESTACADO -->
+    <div class="proof-highlight">
+      ENVIE O COMPROVANTE VIA ZAP
+    </div>
+
+    <button class="whatsapp" onclick="enviarComprovante()">
+      ENVIAR COMPROVANTE PELO ZAP
+    </button>
+
   </div>
 
-  <div class="small">O valor será informado pelo cliente diretamente no aplicativo do banco.</div>
+  <div class="small">
+    O valor será informado pelo cliente diretamente no aplicativo do banco.
+  </div>
+
 </div>
 
 <script>
+
 const PIX_CONFIGS = [
+
   {
-    max: 149.00,
-    key: "bbed7982-d54d-4e10-8e92-80533aa1e879",
-    name: "LARISSA MENDES APOLINARIO"
+    max:149.00,
+    key:"bbed7982-d54d-4e10-8e92-80533aa1e879",
+    name:"LARISSA MENDES APOLINARIO"
   },
+
   {
-    min: 150.00,
-    key: "94af25d0-715b-4878-b895-0b8d7c679d37",
-    name: "MAYCON WESLEY NUNES DE LIMA"
+    min:150.00,
+    key:"94af25d0-715b-4878-b895-0b8d7c679d37",
+    name:"MAYCON WESLEY NUNES DE LIMA"
   }
+
 ];
+
 const MERCHANT_CITY = "BELEM";
 
 let faixaSelecionada = null;
 
+
 function selecionarFaixa(faixa){
+
   faixaSelecionada = faixa;
-  document.querySelectorAll(".buttons button").forEach(btn => btn.classList.remove("selected"));
+
+  document
+    .querySelectorAll(".buttons button")
+    .forEach(btn => btn.classList.remove("selected"));
+
   const botoes = document.querySelectorAll(".buttons button");
-  const mapa = {baixo:0, alto:1, gf:2, pulse:3, imperial:4, outros:5};
-  if (botoes[mapa[faixa]]) botoes[mapa[faixa]].classList.add("selected");
+
+  const mapa = {
+    baixo:0,
+    alto:1,
+    gf:2,
+    pulse:3,
+    imperial:4,
+    outros:5
+  };
+
+  if(botoes[mapa[faixa]]){
+
+    botoes[mapa[faixa]]
+      .classList.add("selected");
+
+  }
+
 }
 
-function tlv(id, value){
-  return id + String(value.length).padStart(2,"0") + value;
+
+function tlv(id,value){
+
+  return id +
+    String(value.length).padStart(2,"0") +
+    value;
+
 }
+
 
 function crc16(payload){
+
   let crc = 0xFFFF;
+
   for(let i=0;i<payload.length;i++){
+
     crc ^= payload.charCodeAt(i) << 8;
+
     for(let j=0;j<8;j++){
-      crc = (crc & 0x8000) ? ((crc << 1) ^ 0x1021) & 0xFFFF : (crc << 1) & 0xFFFF;
+
+      crc =
+        (crc & 0x8000)
+        ? ((crc << 1) ^ 0x1021) & 0xFFFF
+        : (crc << 1) & 0xFFFF;
+
     }
+
   }
-  return crc.toString(16).toUpperCase().padStart(4,"0");
+
+  return crc
+    .toString(16)
+    .toUpperCase()
+    .padStart(4,"0");
+
 }
+
 
 function gerarPix(){
-  const erro = document.getElementById("erro");
-  const resultado = document.getElementById("resultado");
+
+  const erro =
+    document.getElementById("erro");
+
+  const resultado =
+    document.getElementById("resultado");
+
   erro.style.display="none";
 
+
   if(!faixaSelecionada){
-    erro.textContent="Selecione uma opção acima.";
+
+    erro.textContent =
+      "Selecione uma opção acima.";
+
     erro.style.display="block";
+
     resultado.style.display="none";
+
     return;
+
   }
 
-  const config = (faixaSelecionada === "alto")
-    ? PIX_CONFIGS[1]
-    : PIX_CONFIGS[0];
 
-  // QR Code sem valor: o cliente informa o valor no aplicativo do banco.
-  const pix = criarPixSemValor(config);
-  const box = document.getElementById("qrcode");
+  const config =
+    faixaSelecionada === "alto"
+      ? PIX_CONFIGS[1]
+      : PIX_CONFIGS[0];
+
+
+  const pix =
+    criarPixSemValor(config);
+
+
+  const box =
+    document.getElementById("qrcode");
+
   box.innerHTML="";
+
+
   new QRCode(box,{
+
     text:pix,
+
     width:230,
+
     height:230,
-    correctLevel:QRCode.CorrectLevel.M
+
+    correctLevel:
+      QRCode.CorrectLevel.M
+
   });
 
-  document.querySelector(".status").textContent =
-    "Informe o valor diretamente no aplicativo do seu banco.";
+
+  document
+    .querySelector(".status")
+    .textContent =
+      "Informe o valor diretamente no aplicativo do seu banco.";
+
 
   window.pixAtual = pix;
+
   resultado.style.display="block";
+
 }
+
 
 function criarPixSemValor(config){
+
   const merchantAccount =
-    tlv("00","br.gov.bcb.pix") +
-    tlv("01",config.key);
+
+    tlv(
+      "00",
+      "br.gov.bcb.pix"
+    )
+
+    +
+
+    tlv(
+      "01",
+      config.key
+    );
+
 
   let payload =
-    tlv("00","01") +
-    tlv("26",merchantAccount) +
-    tlv("52","0000") +
-    tlv("53","986") +
-    tlv("58","BR") +
-    tlv("59",config.name.substring(0,25)) +
-    tlv("60",MERCHANT_CITY.substring(0,15)) +
-    tlv("62",tlv("05","P2CINE")) +
+
+    tlv("00","01")
+
+    +
+
+    tlv(
+      "26",
+      merchantAccount
+    )
+
+    +
+
+    tlv(
+      "52",
+      "0000"
+    )
+
+    +
+
+    tlv(
+      "53",
+      "986"
+    )
+
+    +
+
+    tlv(
+      "58",
+      "BR"
+    )
+
+    +
+
+    tlv(
+      "59",
+      config.name.substring(0,25)
+    )
+
+    +
+
+    tlv(
+      "60",
+      MERCHANT_CITY.substring(0,15)
+    )
+
+    +
+
+    tlv(
+      "62",
+      tlv("05","P2CINE")
+    )
+
+    +
+
     "6304";
 
+
   return payload + crc16(payload);
+
 }
+
 
 async function copiarPix(){
-  if(!window.pixAtual) return;
-  try{
-    await navigator.clipboard.writeText(window.pixAtual);
-    alert("PIX Copia e Cola copiado!");
-  }catch(e){
-    prompt("Copie o PIX Copia e Cola:", window.pixAtual);
+
+  if(!window.pixAtual){
+
+    return;
+
   }
+
+
+  try{
+
+    await navigator.clipboard
+      .writeText(window.pixAtual);
+
+    alert(
+      "PIX Copia e Cola copiado!"
+    );
+
+  }catch(e){
+
+    prompt(
+      "Copie o PIX Copia e Cola:",
+      window.pixAtual
+    );
+
+  }
+
 }
 
+
 function enviarComprovante(){
-  const mensagem = "Olá! Acabei de realizar o pagamento e estou enviando o comprovante.";
-  const url = "https://wa.me/5591991970340?text=" + encodeURIComponent(mensagem);
-  window.open(url, "_blank");
+
+  const mensagem =
+    "Olá! Acabei de realizar o pagamento e estou enviando o comprovante.";
+
+
+  const url =
+
+    "https://wa.me/5591991970340?text="
+
+    +
+
+    encodeURIComponent(mensagem);
+
+
+  window.open(
+    url,
+    "_blank"
+  );
+
 }
 
 </script>
+
 </body>
 </html>
+```
