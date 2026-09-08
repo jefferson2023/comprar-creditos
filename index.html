@@ -3,62 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>P2CINE - PIX</title>
+<title>COMPRAR CRÉDITOS - PIX</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{
   margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
-  background:#0b0b0f; color:#fff; font-family:Arial,Helvetica,sans-serif;
+  padding:14px;
+  background:linear-gradient(135deg,#16002f 0%,#3b0b75 42%,#062b82 100%);
+  color:#fff; font-family:Arial,Helvetica,sans-serif;
 }
 .card{
-  width:min(430px,92%); background:#15151b; border:1px solid #2b2b35;
-  border-radius:18px; padding:22px; box-shadow:0 15px 45px rgba(0,0,0,.45);
+  width:min(430px,100%);
+  background:rgba(10,8,35,.82);
+  border:1px solid rgba(115,90,255,.65);
+  border-radius:20px; padding:20px;
+  box-shadow:0 15px 45px rgba(0,0,0,.45);
+  backdrop-filter:blur(8px);
 }
-h1{text-align:center;margin:0 0 6px;font-size:30px}
-.subtitle{text-align:center;color:#aaa;margin-bottom:25px}
+h1{text-align:center;margin:0 0 4px;font-size:27px}
+.subtitle{text-align:center;color:#d0c8e8;margin-bottom:17px;font-size:14px}
 label{display:block;margin:0 0 8px;color:#ddd;font-weight:bold}
 input{
   width:100%; padding:15px; border-radius:10px; border:1px solid #383844;
   background:#0e0e13;color:#fff;font-size:18px;outline:none;
 }
 input:focus{border-color:#777}
-.buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:15px 0}
-.buttons button{min-height:72px}
+.buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}
+.buttons button{min-height:62px}
 .buttons span{font-size:13px;font-weight:normal}
 .buttons button.selected{outline:2px solid #fff;background:#444451}
 button{
-  border:0;border-radius:10px;padding:13px;font-size:16px;font-weight:bold;cursor:pointer;
-  background:#2a2a34;color:#fff;
+  border:0;border-radius:10px;padding:11px 8px;font-size:15px;font-weight:bold;cursor:pointer;
+  background:rgba(35,30,75,.9);color:#fff;
+  border:1px solid rgba(105,85,255,.55);
 }
 button:hover{filter:brightness(1.15)}
-.primary{width:100%;background:#fff;color:#111;margin-top:5px}
-.result{display:none;text-align:center;margin-top:25px}
-#qrcode{background:#fff;padding:8px;border-radius:10px;width:max-content;margin:0 auto 12px}
-#qrcode img,#qrcode canvas{width:190px!important;height:190px!important}
+.primary{width:100%;background:#fff;color:#111;margin-top:4px}
+.result{display:none;text-align:center;margin-top:17px}
+#qrcode{background:#fff;padding:8px;border-radius:10px;width:max-content;max-width:100%;margin:0 auto 12px}
 .value{font-size:25px;font-weight:bold;margin:10px 0}
-.status{color:#9f9fa9;font-size:14px;line-height:1.5}
-.highlight{color:#fff;font-weight:bold;font-size:16px;margin:8px 0 4px}
+.status{color:#d7d3e6;font-size:13px;line-height:1.4}
+.highlight{color:#fff;font-weight:bold;font-size:14px;margin:7px 0 3px}
 .copy{
-  width:100%;background:#33333f;margin-top:14px;
+  width:100%;background:#29205d;margin-top:10px;
 }
-.download{width:100%;margin-top:8px}
-.whatsapp{width:100%;margin-top:7px;background:#25D366;color:#fff;padding:11px;font-size:14px}
+.whatsapp{width:100%;margin-top:8px;background:#25D366;color:#fff;border-color:#25D366}
 .error{color:#ff7272;margin-top:12px;text-align:center;display:none}
-.small{font-size:12px;color:#777;text-align:center;margin-top:20px}
+.small{font-size:11px;color:#aaa6bd;text-align:center;margin-top:12px}
+
 @media (max-width:480px){
-  body{padding:10px}
-  .card{width:100%;padding:16px;border-radius:15px}
-  h1{font-size:24px}
-  .subtitle{margin-bottom:16px}
-  .buttons{gap:7px;margin:10px 0}
-  .buttons button{min-height:58px;padding:9px 6px;font-size:14px}
-  .buttons span{font-size:11px}
-  .primary{padding:11px;font-size:14px}
-  #qrcode{padding:6px;margin-bottom:10px}
-  #qrcode img,#qrcode canvas{width:170px!important;height:170px!important}
-  .highlight{font-size:14px}
-  .small{font-size:10px;margin-top:12px}
+  body{padding:8px;align-items:flex-start;}
+  .card{padding:16px;border-radius:17px;margin:4px 0;}
+  h1{font-size:24px;}
+  .subtitle{margin-bottom:13px;font-size:13px;}
+  .buttons{gap:7px;margin:10px 0;}
+  .buttons button{min-height:57px;padding:9px 6px;font-size:13px;}
+  .buttons span{font-size:11px;}
+  .primary{padding:11px;font-size:14px;}
+  .result{margin-top:14px;}
+  #qrcode{padding:6px;margin-bottom:10px;}
+  #qrcode canvas,#qrcode img{width:170px !important;height:170px !important;}
+  .highlight{font-size:13px;}
+  .copy,.whatsapp{padding:10px;font-size:13px;}
+  .small{margin-top:9px;font-size:10px;}
 }
 </style>
 </head>
@@ -130,37 +138,13 @@ function crc16(payload){
   return crc.toString(16).toUpperCase().padStart(4,"0");
 }
 
-function criarPix(valor, config){
-  const merchantAccount =
-    tlv("00","br.gov.bcb.pix") +
-    tlv("01",config.key);
-
-  let payload =
-    tlv("00","01") +
-    tlv("26",merchantAccount) +
-    tlv("52","0000") +
-    tlv("53","986") +
-    tlv("54",valor.toFixed(2)) +
-    tlv("58","BR") +
-    tlv("59",config.name.substring(0,25)) +
-    tlv("60",MERCHANT_CITY.substring(0,15)) +
-    tlv("62",tlv("05","P2CINE")) +
-    "6304";
-
-  return payload + crc16(payload);
-}
-
-function parseValor(){
-  return null;
-}
-
 function gerarPix(){
   const erro = document.getElementById("erro");
   const resultado = document.getElementById("resultado");
   erro.style.display="none";
 
   if(!faixaSelecionada){
-    erro.textContent="Selecione uma das quatro opções P2CINE.";
+    erro.textContent="Selecione uma opção acima.";
     erro.style.display="block";
     resultado.style.display="none";
     return;
