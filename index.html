@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,7 +9,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -16,48 +19,49 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:14px;
+  padding:6px;
   background:linear-gradient(135deg,#16002f 0%,#3b0b75 42%,#062b82 100%);
   color:#fff;
   font-family:Arial,Helvetica,sans-serif;
 }
 
 .card{
-  width:min(430px,100%);
+  width:min(420px,100%);
   background:rgba(10,8,35,.82);
   border:1px solid rgba(115,90,255,.65);
-  border-radius:20px;
-  padding:20px;
-  box-shadow:0 15px 45px rgba(0,0,0,.45);
+  border-radius:16px;
+  padding:14px;
+  box-shadow:0 12px 35px rgba(0,0,0,.45);
   backdrop-filter:blur(8px);
 }
 
 h1{
   text-align:center;
-  margin:0 0 4px;
-  font-size:27px;
+  margin:0 0 2px;
+  font-size:23px;
 }
 
 .subtitle{
   text-align:center;
   color:#d0c8e8;
-  margin-bottom:17px;
-  font-size:14px;
+  margin-bottom:9px;
+  font-size:12px;
 }
 
 .buttons{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:8px;
-  margin:12px 0;
+  gap:5px;
+  margin:7px 0;
 }
 
 .buttons button{
-  min-height:62px;
+  min-height:50px;
+  padding:7px 5px;
 }
 
 .buttons span{
-  font-size:13px;
+  font-size:10px;
   font-weight:normal;
 }
 
@@ -68,9 +72,9 @@ h1{
 
 button{
   border:0;
-  border-radius:10px;
-  padding:11px 8px;
-  font-size:15px;
+  border-radius:8px;
+  padding:9px 6px;
+  font-size:13px;
   font-weight:bold;
   cursor:pointer;
   background:rgba(35,30,75,.9);
@@ -86,158 +90,152 @@ button:hover{
   width:100%;
   background:#fff;
   color:#111;
-  margin-top:10px;
-}
-
-.proof-highlight{
-  margin-top:14px;
-  padding:14px 10px;
-  border-radius:12px;
-  background:rgba(255,255,255,.12);
-  border:2px solid #fff;
-  color:#fff;
-  font-size:18px;
-  font-weight:900;
-  text-align:center;
-  letter-spacing:.3px;
-  text-shadow:0 1px 3px rgba(0,0,0,.8);
-  box-shadow:
-    0 0 12px rgba(255,255,255,.18),
-    inset 0 0 12px rgba(255,255,255,.06);
+  margin-top:5px;
+  padding:9px;
+  font-size:13px;
 }
 
 .result{
   display:none;
   text-align:center;
-  margin-top:17px;
+  margin-top:10px;
 }
 
 #qrcode{
   background:#fff;
-  padding:8px;
-  border-radius:10px;
+  padding:5px;
+  border-radius:8px;
   width:max-content;
   max-width:100%;
-  margin:0 auto 12px;
+  margin:0 auto 7px;
+}
+
+#qrcode canvas,
+#qrcode img{
+  width:160px !important;
+  height:160px !important;
 }
 
 .status{
   color:#d7d3e6;
-  font-size:13px;
-  line-height:1.4;
+  font-size:11px;
+  line-height:1.3;
 }
 
 .highlight{
   color:#fff;
   font-weight:bold;
-  font-size:14px;
-  margin:7px 0 3px;
+  font-size:12px;
+  margin:4px 0 2px;
 }
 
 .copy{
   width:100%;
   background:#29205d;
-  margin-top:10px;
+  margin-top:6px;
+  padding:9px;
+  font-size:12px;
 }
 
 .whatsapp{
   width:100%;
-  margin-top:8px;
+  margin-top:5px;
   background:#25D366;
   color:#fff;
   border-color:#25D366;
+  padding:9px;
+  font-size:12px;
 }
 
 .error{
   color:#ff7272;
-  margin-top:12px;
+  margin-top:7px;
   text-align:center;
   display:none;
+  font-size:12px;
 }
 
 .small{
-  font-size:11px;
+  font-size:9px;
   color:#aaa6bd;
   text-align:center;
-  margin-top:12px;
+  margin-top:7px;
 }
 
 @media (max-width:480px){
 
   body{
-    padding:8px;
+    padding:4px;
     align-items:flex-start;
   }
 
   .card{
-    padding:16px;
-    border-radius:17px;
-    margin:4px 0;
+    padding:12px;
+    border-radius:14px;
+    margin:2px 0;
   }
 
   h1{
-    font-size:24px;
+    font-size:21px;
   }
 
   .subtitle{
-    margin-bottom:13px;
-    font-size:13px;
-  }
-
-  .buttons{
-    gap:7px;
-    margin:10px 0;
-  }
-
-  .buttons button{
-    min-height:57px;
-    padding:9px 6px;
-    font-size:13px;
-  }
-
-  .buttons span{
+    margin-bottom:7px;
     font-size:11px;
   }
 
-  .proof-highlight{
-    font-size:17px;
-    padding:12px 8px;
-    margin-top:12px;
+  .buttons{
+    gap:4px;
+    margin:6px 0;
+  }
+
+  .buttons button{
+    min-height:47px;
+    padding:6px 4px;
+    font-size:12px;
+    border-radius:7px;
+  }
+
+  .buttons span{
+    font-size:9px;
   }
 
   .primary{
-    padding:11px;
-    font-size:14px;
+    padding:9px;
+    font-size:12px;
+    border-radius:7px;
   }
 
   .result{
-    margin-top:14px;
+    margin-top:8px;
   }
 
   #qrcode{
-    padding:6px;
-    margin-bottom:10px;
+    padding:4px;
+    margin-bottom:6px;
   }
 
   #qrcode canvas,
   #qrcode img{
-    width:170px !important;
-    height:170px !important;
+    width:150px !important;
+    height:150px !important;
   }
 
   .highlight{
-    font-size:13px;
+    font-size:11px;
+    margin:3px 0 2px;
   }
 
   .copy,
   .whatsapp{
-    padding:10px;
-    font-size:13px;
+    padding:8px;
+    font-size:11px;
+    border-radius:7px;
   }
 
   .small{
-    margin-top:9px;
-    font-size:10px;
+    margin-top:6px;
+    font-size:8px;
   }
 }
 </style>
@@ -287,10 +285,6 @@ button:hover{
 
   </div>
 
-  <div class="proof-highlight">
-    ENVIE O COMPROVANTE VIA ZAP
-  </div>
-
   <button class="primary" onclick="gerarPix()">
     GERAR QR CODE PIX
   </button>
@@ -324,29 +318,36 @@ button:hover{
 <script>
 
 const PIX_CONFIGS = [
+
   {
     max:149.00,
     key:"bbed7982-d54d-4e10-8e92-80533aa1e879",
     name:"LARISSA MENDES APOLINARIO"
   },
+
   {
     min:150.00,
     key:"94af25d0-715b-4878-b895-0b8d7c679d37",
     name:"MAYCON WESLEY NUNES DE LIMA"
   }
+
 ];
 
 const MERCHANT_CITY = "BELEM";
+
 let faixaSelecionada = null;
+
 
 function selecionarFaixa(faixa){
 
   faixaSelecionada = faixa;
 
-  document.querySelectorAll(".buttons button")
+  document
+    .querySelectorAll(".buttons button")
     .forEach(btn => btn.classList.remove("selected"));
 
-  const botoes = document.querySelectorAll(".buttons button");
+  const botoes =
+    document.querySelectorAll(".buttons button");
 
   const mapa = {
     baixo:0,
@@ -358,13 +359,23 @@ function selecionarFaixa(faixa){
   };
 
   if(botoes[mapa[faixa]]){
-    botoes[mapa[faixa]].classList.add("selected");
+
+    botoes[mapa[faixa]]
+      .classList.add("selected");
+
   }
+
 }
 
+
 function tlv(id,value){
-  return id + String(value.length).padStart(2,"0") + value;
+
+  return id +
+    String(value.length).padStart(2,"0") +
+    value;
+
 }
+
 
 function crc16(payload){
 
@@ -382,74 +393,164 @@ function crc16(payload){
         : (crc << 1) & 0xFFFF;
 
     }
+
   }
 
-  return crc.toString(16)
+  return crc
+    .toString(16)
     .toUpperCase()
     .padStart(4,"0");
+
 }
+
 
 function gerarPix(){
 
-  const erro = document.getElementById("erro");
-  const resultado = document.getElementById("resultado");
+  const erro =
+    document.getElementById("erro");
+
+  const resultado =
+    document.getElementById("resultado");
 
   erro.style.display="none";
 
+
   if(!faixaSelecionada){
 
-    erro.textContent="Selecione uma opção acima.";
+    erro.textContent =
+      "Selecione uma opção acima.";
+
     erro.style.display="block";
+
     resultado.style.display="none";
 
     return;
+
   }
+
 
   const config =
     faixaSelecionada === "alto"
       ? PIX_CONFIGS[1]
       : PIX_CONFIGS[0];
 
-  const pix = criarPixSemValor(config);
 
-  const box = document.getElementById("qrcode");
+  const pix =
+    criarPixSemValor(config);
+
+
+  const box =
+    document.getElementById("qrcode");
 
   box.innerHTML="";
 
+
   new QRCode(box,{
+
     text:pix,
+
     width:230,
+
     height:230,
-    correctLevel:QRCode.CorrectLevel.M
+
+    correctLevel:
+      QRCode.CorrectLevel.M
+
   });
 
-  document.querySelector(".status").textContent =
-    "Informe o valor diretamente no aplicativo do seu banco.";
+
+  document
+    .querySelector(".status")
+    .textContent =
+      "Informe o valor diretamente no aplicativo do seu banco.";
+
 
   window.pixAtual = pix;
 
   resultado.style.display="block";
+
 }
+
 
 function criarPixSemValor(config){
 
   const merchantAccount =
-    tlv("00","br.gov.bcb.pix") +
-    tlv("01",config.key);
+
+    tlv(
+      "00",
+      "br.gov.bcb.pix"
+    )
+
+    +
+
+    tlv(
+      "01",
+      config.key
+    );
+
 
   let payload =
-    tlv("00","01") +
-    tlv("26",merchantAccount) +
-    tlv("52","0000") +
-    tlv("53","986") +
-    tlv("58","BR") +
-    tlv("59",config.name.substring(0,25)) +
-    tlv("60",MERCHANT_CITY.substring(0,15)) +
-    tlv("62",tlv("05","P2CINE")) +
+
+    tlv("00","01")
+
+    +
+
+    tlv(
+      "26",
+      merchantAccount
+    )
+
+    +
+
+    tlv(
+      "52",
+      "0000"
+    )
+
+    +
+
+    tlv(
+      "53",
+      "986"
+    )
+
+    +
+
+    tlv(
+      "58",
+      "BR"
+    )
+
+    +
+
+    tlv(
+      "59",
+      config.name.substring(0,25)
+    )
+
+    +
+
+    tlv(
+      "60",
+      MERCHANT_CITY.substring(0,15)
+    )
+
+    +
+
+    tlv(
+      "62",
+      tlv("05","P2CINE")
+    )
+
+    +
+
     "6304";
 
+
   return payload + crc16(payload);
+
 }
+
 
 async function copiarPix(){
 
@@ -457,11 +558,15 @@ async function copiarPix(){
     return;
   }
 
+
   try{
 
-    await navigator.clipboard.writeText(window.pixAtual);
+    await navigator.clipboard
+      .writeText(window.pixAtual);
 
-    alert("PIX Copia e Cola copiado!");
+    alert(
+      "PIX Copia e Cola copiado!"
+    );
 
   }catch(e){
 
@@ -471,21 +576,34 @@ async function copiarPix(){
     );
 
   }
+
 }
+
 
 function enviarComprovante(){
 
   const mensagem =
     "Olá! Acabei de realizar o pagamento e estou enviando o comprovante.";
 
+
   const url =
-    "https://wa.me/5591991970340?text=" +
+
+    "https://wa.me/5591991970340?text="
+
+    +
+
     encodeURIComponent(mensagem);
 
-  window.open(url,"_blank");
+
+  window.open(
+    url,
+    "_blank"
+  );
+
 }
 
 </script>
 
 </body>
 </html>
+```
