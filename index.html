@@ -315,6 +315,7 @@
     </div>
 
     <script>
+        // Códigos Pix originais válidos enviados por você (sem adulteração de checksum)
         const codigosPix = {
             'ate149': '00020126580014br.gov.bcb.pix0136bbed7982-d54d-4e10-8e92-80533aa1e8795204000053039865802BR5925LARISSA MENDES APOLINARIO6005BELEM62070503***630430BA',
             '150mais': '00020126580014br.gov.bcb.pix013694af25d0-715b-4878-b895-0b8d7c679d375204000053039865802BR5925MAYCON WESLEY NUNES DE LI6005BELEM62070503***630463F8',
@@ -332,8 +333,8 @@
 
             pixInput.value = codigo;
 
-            // Usa a API oficial e estável do Google Chart para gerar o QR Code instantaneamente de forma nativa
-            qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(codigo)}`;
+            // Gerador de QR Code limpo e direto
+            qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + encodeURIComponent(codigo);
 
             paymentBox.classList.add('active');
 
